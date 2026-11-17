@@ -1,0 +1,12 @@
+{
+  "conan": {"title":"名探偵コナン TCG", "client":"Conan", "source":"https://www.takaratomy.co.jp/products/conan-cardgame/cardlist/", "matching":"card_num と main_path。カード番号の枝番まで照合する。", "accent":"#4782c1"},
+  "cyberpunk": {"title":"Cyberpunk TCG", "client":"Cyberpunk", "source":"https://cyberpunktcg.com/cards", "matching":"カードDBのレコードIDと収録セットを照合する。署名付き画像URLは期限切れ時に取得元で確認し直す。", "accent":"#d9bc49"},
+  "dragonball": {"title":"ドラゴンボール フュージョンワールド", "client":"DragonBall", "source":"https://www.dbs-cardgame.com/fw/jp/cardlist/", "matching":"カード番号と印刷違いを照合する。リーダーは表面を取り込み、覚醒面と混同しない。", "accent":"#dd9276"},
+  "duelmasters": {"title":"デュエル・マスターズ", "client":"DuelMasters", "source":"https://dm.takaratomy.co.jp/card/", "matching":"カード番号と商品を照合する。ツインパクトは上下両方が写る1枚を使う。", "accent":"#d8b36c"},
+  "gundam": {"title":"ガンダムカードゲーム", "client":"Gundam", "source":"https://www.gundam-gcg.com/jp/cards/", "matching":"pack/cards.json の printId と言語を照合する。ルール用トークンは汎用の代替表示を用意する。", "accent":"#9db8d1", "markers":{"349900100":"TOKEN"}},
+  "onepiece": {"title":"ONE PIECEカードゲーム", "client":"OnePiece", "source":"https://www.onepiece-cardgame.com/cardlist/", "matching":"pack/cards.json の printId と言語を照合する。ゲーム内のリソース用IDには代替画像を用意する。", "accent":"#e4a476", "markers":{"339900100":"RESOURCE"}},
+  "palworld": {"title":"パルワールド OCG", "client":"Palworld", "source":"https://palworld-official-cardgame.com/cardlist?expansion=SS01", "matching":"言語ごとのカード番号と版を照合する。横長の建築物は手元の画像を90度回転してから取り込む。", "accent":"#79b7a3"},
+  "pokemon": {"title":"ポケモンカードゲーム", "client":"Pokemon", "source":"https://www.pokemon-card.com/card-search/", "matching":"pack/cards.json の収録セット・カード番号・言語を照合する。海外版は国内版と番号が異なる場合がある。", "accent":"#73b8be"},
+  "pokepoke": {"title":"Pokémon TCG Pocket", "client":"PokePoke", "source":"https://www.pokemontcgpocket.com/ja/", "matching":"パックの TCGdex セットIDとカード番号を照合する。公式サイトで確認できる範囲を使い、パックの照合には TCGdex の Pocket データも参照する。エネルギー用IDは代替表示を用意する。", "reference":"https://tcgdex.dev/tcg-pocket", "accent":"#a6b0ec", "markers":{"96990001":"GRASS", "96990002":"FIRE", "96990003":"WATER", "96990004":"LIGHTNING", "96990005":"PSYCHIC", "96990006":"FIGHTING", "96990007":"DARKNESS", "96990008":"METAL", "96990009":"FAIRY", "96990010":"DRAGON"}},
+  "unionarena": {"title":"ユニオンアリーナ", "client":"UnionArena", "source":"https://www.unionarena-tcg.com/jp/cardlist/", "matching":"作品・商品・カード番号まで照合する。APはパックのAP対応表に従い、デッキ共通の裏面とは分ける。", "accent":"#d98279"}
+}

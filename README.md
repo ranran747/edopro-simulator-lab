@@ -18,6 +18,8 @@ To use your existing modified Win32 ocgcore DLL, pass its directory as `-CoreDir
 
 ## Use an existing card pack
 
+Each supported game has its own Windows launcher and artwork setup kit. See the [ten profile downloads](docs/PROFILE_RELEASES.md) for their runtime requirements and image workflows.
+
 Open the game-specific build with its matching pack. Extract the rules and card text overlays into the parent of `runtime/`. The `*-card-text.zip` overlay holds the database and any separate card text. The `*-rules.zip` overlay holds Lua, scenarios and decks. See [profile and pack instructions](docs/PACKS.md) to generate these from an existing local project.
 
 Optional artwork goes into `runtime/ProjectIgnis/pics` using the simulator's numeric IDs. Requires Python 3.10 or newer.

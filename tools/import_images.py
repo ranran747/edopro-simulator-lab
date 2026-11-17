@@ -1,6 +1,7 @@
 """Import EDOPro card art from a local folder or a user-supplied HTTPS TSV."""
 import argparse
 from collections import Counter
+from io import BytesIO
 from pathlib import Path
 import re
 import sys
@@ -9,7 +10,7 @@ from urllib.error import HTTPError
 from urllib.parse import urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
-ART_NAME = re.compile(r"([1-9][0-9]{0,9})\.(jpe?g|png)", re.IGNORECASE)
+ART_NAME = re.compile(r"([1-9][0-9]{0,9})\.(jpe?g|png|webp)", re.IGNORECASE)
 CARD_ID = re.compile(r"[1-9][0-9]{0,9}")
 MAX_BYTES = 12 * 1024 * 1024
 
@@ -20,6 +21,23 @@ def image_extension(data):
     if data.startswith(b"\xff\xd8\xff") and data.endswith(b"\xff\xd9"):
         return ".jpg"
     raise ValueError("incomplete or unsupported image (expected PNG or JPEG)")
+
+
+def convert_webp(data):
+    if data[:4] != b"RIFF" or data[8:12] != b"WEBP":
+        return data
+    try:
+        from PIL import Image, ImageOps
+    except ImportError:
+        raise ValueError("WebP import needs Pillow (python -m pip install Pillow)") from None
+    if int.from_bytes(data[4:8], "little") + 8 != len(data):
+        raise ValueError("incomplete WebP image")
+    with Image.open(BytesIO(data), formats=["WEBP"]) as source:
+        if source.width * source.height > 20_000_000 or getattr(source, "is_animated", False):
+            raise ValueError("expected a still WebP image of at most 20 megapixels")
+        converted = BytesIO()
+        ImageOps.exif_transpose(source).convert("RGB").save(converted, format="JPEG", quality=92)
+    return converted.getvalue()
 
 
 def validate_url(url, hosts):
@@ -63,6 +81,7 @@ def import_images(entries, pics, reader, wait):
                 data = stream.read(MAX_BYTES + 1)
             if len(data) > MAX_BYTES:
                 raise ValueError("image exceeds 12 MiB")
+            data = convert_webp(data)
             dest = pics / (card_id + image_extension(data))
             with dest.open("xb") as output:
                 output.write(data)
@@ -87,7 +106,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     source = parser.add_mutually_exclusive_group(required=True)
     source.add_argument("--manifest", type=Path, help="TSV with unique numeric ID and direct HTTPS image URL")
-    source.add_argument("--local", type=Path, help="directory containing numeric JPG or PNG filenames")
+    source.add_argument("--local", type=Path, help="directory containing numeric JPG, PNG, or WebP filenames")
     parser.add_argument("--runtime", type=Path, required=True, help="path to the ProjectIgnis directory")
     parser.add_argument("--allow-host", action="append", default=[])
     args = parser.parse_args()
