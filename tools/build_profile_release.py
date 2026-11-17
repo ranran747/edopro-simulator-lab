@@ -15,6 +15,7 @@ BASE_SCRIPTS = {"archetype_setcode_constants.lua", "card_counter_constants.lua",
                 "cards_specific_functions.lua", "constant.lua", "debug_utility.lua",
                 "deprecated_functions.lua", "utility.lua", "COPYING.txt"}
 REPLACED_TEXTURES = {"cover", "cover2", "unknown"}
+DEFAULT_SKIN = "Purple - Obsessed"
 
 START = r"""@echo off
 setlocal
@@ -75,11 +76,13 @@ python tools/import_images.py --runtime runtime/ProjectIgnis --manifest images.t
 ゲームを終了し、利用可能な公式裏面を用意してから適用します。同じ裏面を通常表示・サイズ変更後の表示の両方に使います。
 
 ```powershell
+python tools/profile_assets.py theme --backgrounds
 python tools/profile_assets.py theme --official-back 'C:\\card-art\\back.png'
-python tools/profile_assets.py theme --fill
+python tools/profile_assets.py theme --title-logo 'C:\\card-art\\logo.png' --icon 'C:\\card-art\\icon.ico'
 ```
 
-`--fill` は空いている箇所に幾何学模様の背景・裏面と必要な代替表示を作ります。
+`--backgrounds` は作品の場所をイメージした図案をタイトル画面と対戦背景に設定します。
+公式裏面を手元に用意できないときは `--backgrounds --scene-sleeve` で場所の図案を使ったファン用スリーブを設定できます。
 `--title` と `--battle` で手元の横長素材を指定できます。ONE PIECE のリソース用裏面は `--resource-back` で個別に指定できます。
 
 [Simulator Lab のソースとライセンス](https://github.com/ranran747/edopro-simulator-lab/blob/main/docs/SOURCE.md)
@@ -92,6 +95,9 @@ def write_kit(root, profile, local=False):
     puzzle = f"{profile['client']}_Player_Match"
     database = PROFILES[name]
     (root / "tools").mkdir()
+    (root / "artwork").mkdir()
+    source_scene = TOOLS.parent / "artwork" / f"{name}.jpg"
+    shutil.copy2(source_scene, root / "artwork" / source_scene.name)
     for filename in ("import_images.py", "profile_assets.py", "export_local_pack.py"):
         shutil.copy2(TOOLS / filename, root / "tools" / filename)
     shutil.copy2(TOOLS.parent / "COPYING", root / "COPYING")
@@ -110,12 +116,12 @@ def write_kit(root, profile, local=False):
 > カード番号を照合できた行について、別の `images.tsv` にヘッダーなしで `ID<TAB>直接のHTTPS画像URL` を書いてください。
 > 使用するホストを `--allow-host` で明示して `tools/import_images.py` を実行してください。ローカル提供の画像は数値IDに改名して `--local` で取り込んでください。
 > 見つからないID、版や面が特定できないID、リクエストが拒否されたIDは報告してください。利用可能な公式裏面がある場合は別ファイルとして用意し、`tools/profile_assets.py theme --official-back` で適用してください。
-> 裏面や対戦背景の入手が難しい場合は、`theme --fill` の無地・幾何学模様を使ってください。既存の公式素材の図柄・ロゴ・カード表面を描き起こさず、素材をローカルで管理してください。
+> 対戦背景には `theme --backgrounds` で同梱の図案を設定できます。素材はローカルで管理してください。
 {reference}"""
     (root / "COLLECT.md").write_text(prompt, encoding="utf-8")
 
 
-def copy_runtime(project, target, profile):
+def copy_runtime(project, target, profile, scene, official):
     source = project / RUNTIME
     pack = project / "pack"
     name = profile["id"]
@@ -139,8 +145,10 @@ def copy_runtime(project, target, profile):
     (target / "config/configs.json").write_text('{"repos": [], "urls": [], "servers": []}\n', encoding="utf-8")
     (target / "config/system.conf").write_text(
         "textfont = fonts/NotoSansJP-Regular.otf 12\nnumfont = fonts/NotoSansJP-Regular.otf\n"
-        "fallbackFonts = \"bundled 12\"\nlanguage = English\n", encoding="utf-8")
-    for _, path in pack_files(source, ("fonts", "notices"), {".otf", ".ttf", ".txt"}):
+        "fallbackFonts = \"bundled 12\"\nlanguage = English\n"
+        f"automonsterpos = 1\nautospellpos = 1\nskin = {DEFAULT_SKIN}\n", encoding="utf-8")
+    for _, path in pack_files(source, ("fonts", "notices", f"skin/{DEFAULT_SKIN}"),
+                              {".otf", ".ttf", ".txt", ".xml", ".png", ".gif"}):
         copy(path)
     for path in (source / "textures").iterdir():
         if path.is_file() and path.stem not in REPLACED_TEXTURES:
@@ -168,10 +176,16 @@ def copy_runtime(project, target, profile):
             copy(path.relative_to(source))
     for path in ("pics", "deck", "replay", "screenshots"):
         (target / path).mkdir(exist_ok=True)
-    theme(target, profile, fill=True)
+    (target / "WindBot").mkdir()
+    (target / "WindBot/bots.json").write_text("[]\n", encoding="utf-8")
+    publisher_files = {"official_back": "cover.png", "resource_back": "don-back.png",
+                       "title_logo": "title-logo.png", "icon": "AppIcon.ico"}
+    local_art = {role: official / filename for role, filename in publisher_files.items()
+                 if official and (official / filename).is_file()}
+    theme(target, profile, title=scene, battle=scene, scene_sleeve=True, fill=True, **local_art)
 
 
-def build(profile, output, project):
+def build(profile, output, project, official=None):
     local = project is not None
     suffix = "Windows-local" if local else "art-and-setup-kit"
     filename = f"edopro-{profile['id']}-{suffix}"
@@ -181,9 +195,10 @@ def build(profile, output, project):
         root.mkdir()
         write_kit(root, profile, local)
         if local:
-            copy_runtime(project, root / RUNTIME, profile)
+            copy_runtime(project, root / RUNTIME, profile, root / "artwork" / f"{profile['id']}.jpg", official)
         contents = ((path, path.relative_to(root.parent).as_posix())
-                    for path in sorted(root.rglob("*")) if path.is_file())
+                    for path in sorted(root.rglob("*"))
+                    if path.is_file() or (local and path.is_dir() and not any(path.iterdir())))
         target = output / f"{filename}.zip"
         write_zip(target, contents)
     print(target)
@@ -195,9 +210,12 @@ def main():
     parser.add_argument("profile", choices=PROFILES)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--local-project", type=Path, help="build a local-only ZIP from this installed simulator")
+    parser.add_argument("--official-art", type=Path, help="folder of publisher artwork to use in a local ZIP")
     args = parser.parse_args()
+    if args.official_art and (not args.local_project or not args.official_art.is_dir()):
+        parser.error("--official-art requires a local project and an existing artwork directory")
     try:
-        build(profile_for(args.profile), args.output, args.local_project)
+        build(profile_for(args.profile), args.output, args.local_project, args.official_art)
     except ImportError:
         parser.error("Windows ZIP assembly needs Pillow. Run: python -m pip install Pillow")
     except (OSError, ValueError, sqlite3.Error) as error:

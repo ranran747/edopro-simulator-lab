@@ -91,8 +91,9 @@ def draw_placeholder(size, accent, text="", *, landscape=False, title=False):
     return image
 
 
-def theme(runtime, profile, *, official_back=None, resource_back=None, title=None, battle=None, fill=False):
-    from PIL import Image, ImageOps
+def theme(runtime, profile, *, official_back=None, resource_back=None, title=None, battle=None,
+          title_logo=None, icon=None, scene_sleeve=False, fill=False):
+    from PIL import Image, ImageDraw, ImageFont, ImageOps
 
     if resource_back and profile["id"] != "onepiece":
         raise ValueError("--resource-back is available for the onepiece profile")
@@ -116,11 +117,36 @@ def theme(runtime, profile, *, official_back=None, resource_back=None, title=Non
             save_image(image, path, replace=bool(original))
 
     card_size = (360, 500)
-    write([tcg / "cover.png", textures / "cover.png", textures / "cover2.png"], official_back, card_size)
+    cover_paths = [tcg / "cover.png", textures / "cover.png", textures / "cover2.png"]
+    if scene_sleeve and not official_back:
+        if not title:
+            raise ValueError("--scene-sleeve needs --backgrounds or --title")
+        with Image.open(title) as source:
+            sleeve = ImageOps.fit(source.convert("RGB"), card_size, Image.Resampling.LANCZOS)
+        draw = ImageDraw.Draw(sleeve)
+        draw.rounded_rectangle((8, 8, 351, 491), radius=15, outline=accent, width=4)
+        draw.rounded_rectangle((22, 391, 337, 475), radius=12, fill="#162130")
+        draw.text((180, 420), profile["client"], font=ImageFont.load_default(size=30),
+                  fill="white", anchor="mm")
+        draw.text((180, 450), "FAN SLEEVE", font=ImageFont.load_default(size=13), fill=accent, anchor="mm")
+        for path in cover_paths:
+            save_image(sleeve, path, replace=True)
+    else:
+        write(cover_paths, official_back, card_size)
     write([tcg / "title.jpg"], title, (1280, 720), landscape=True, heading=True)
     write([tcg / "battle.jpg"], battle, (1280, 720), landscape=True)
     if profile["id"] == "onepiece":
         write([tcg / "don-back.png"], resource_back, card_size, caption="RESOURCE")
+    if title_logo:
+        with Image.open(title_logo) as source:
+            logo = source.convert("RGBA")
+            logo.thumbnail((1000, 400), Image.Resampling.LANCZOS)
+            save_image(logo, tcg / "title-logo.png", replace=True)
+    if icon:
+        with Image.open(icon) as source:
+            square = ImageOps.pad(source.convert("RGBA"), (256, 256), color=(0, 0, 0, 0))
+            save_image(square, tcg / "AppIcon.ico", replace=True)
+            save_image(square, textures / "AppIcon.png", replace=True)
     if fill:
         save_image(draw_placeholder(card_size, accent, "NO IMAGE"), textures / "unknown.jpg")
         for code, label in profile.get("markers", {}).items():
@@ -141,6 +167,10 @@ def main():
     assets.add_argument("--resource-back", type=Path)
     assets.add_argument("--title", type=Path)
     assets.add_argument("--battle", type=Path)
+    assets.add_argument("--title-logo", type=Path)
+    assets.add_argument("--icon", type=Path)
+    assets.add_argument("--backgrounds", action="store_true", help="install this kit's location scene")
+    assets.add_argument("--scene-sleeve", action="store_true", help="make a fan sleeve from the location scene")
     assets.add_argument("--fill", action="store_true")
     args = parser.parse_args()
     try:
@@ -151,10 +181,13 @@ def main():
             configured = args.runtime / "config/tcg-profile.conf"
             if configured.read_text(encoding="utf-8-sig").strip() != profile["id"]:
                 raise ValueError("runtime profile differs from the selected kit")
-            if not any((args.official_back, args.resource_back, args.title, args.battle, args.fill)):
-                raise ValueError("specify local artwork or --fill")
+            if not any((args.official_back, args.resource_back, args.title, args.battle, args.title_logo,
+                        args.icon, args.backgrounds, args.scene_sleeve, args.fill)):
+                raise ValueError("specify local artwork, --backgrounds, or --fill")
+            scene = TOOLS.parent / "artwork" / f"{profile['id']}.jpg" if args.backgrounds else None
             theme(args.runtime, profile, official_back=args.official_back, resource_back=args.resource_back,
-                  title=args.title, battle=args.battle, fill=args.fill)
+                  title=args.title or scene, battle=args.battle or scene,
+                  title_logo=args.title_logo, icon=args.icon, scene_sleeve=args.scene_sleeve, fill=args.fill)
             print(f"Theme updated for {profile['id']}")
     except ImportError:
         parser.error("theme needs Pillow. Run: python -m pip install Pillow")
