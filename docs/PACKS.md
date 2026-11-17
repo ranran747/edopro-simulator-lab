@@ -15,7 +15,7 @@ The pack tools support these local project layouts.
 | `pokepoke` | `pokepoke.cdb` |
 | `unionarena` | `unionarena.cdb` |
 
-Export from an existing project after its pack build has completed. The value of `--project` is the directory containing `pack/`.
+Export from an existing project after its pack build and local install have completed. The value of `--project` is the directory containing `pack/` and `runtime/`. The rules ZIP also includes per-card Lua generated in the installed runtime for IDs in that pack's database.
 
 ```powershell
 python tools/export_local_pack.py unionarena --project C:\path\to\edopro-unionarena --output dist
