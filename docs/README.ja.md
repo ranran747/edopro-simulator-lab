@@ -6,10 +6,10 @@ EDOPro を使ったカードシミュレーターの開発・検証用リポジ�
 
 ## 自作カードの対戦を実行する
 
-Visual Studio 2022 C++ Build Tools、Windows SDK、CMake、EDOPro の共通スクリプトが入った `ProjectIgnis` フォルダを用意します。
+[Windows コマンドライン版](https://github.com/ranran747/edopro-simulator-lab/releases/latest)を展開し、PowerShell で `Run-demo.cmd` を実行します。ソースからビルドする場合は Visual Studio 2022 C++ Build Tools、Windows SDK、CMake を用意します。
 
 ```powershell
-.\tools\run-demo.ps1 -ProjectIgnis "C:\path\to\ProjectIgnis" -Seeds 20
+.\tools\run-demo.ps1 -Seeds 20
 ```
 
 改造済みの32ビット `ocgcore.dll` がある場合は `-CoreDirectory` で DLL のあるフォルダを渡せます。決着と両席それぞれのカード53枚（デッキ50枚＋AP3枚）を検査します。ログは `artifacts/` に出ます。

@@ -6,10 +6,12 @@ Build and test local card-game simulators on EDOPro. This developer preview cont
 
 ## Run the sample on Windows
 
-From PowerShell, with Visual Studio 2022 C++ Build Tools, a Windows SDK, CMake, and the shared scripts from a matching EDOPro installation:
+Download the [Windows command-line demo](https://github.com/ranran747/edopro-simulator-lab/releases/latest), extract it, and run `Run-demo.cmd` from PowerShell. It runs 20 fixed-seed matches and saves the traces in `artifacts/`.
+
+To build from source, use Visual Studio 2022 C++ Build Tools, a Windows SDK and CMake:
 
 ```powershell
-.\tools\run-demo.ps1 -ProjectIgnis "C:\path\to\ProjectIgnis" -Seeds 20
+.\tools\run-demo.ps1 -Seeds 20
 ```
 
 To use your existing modified Win32 ocgcore DLL, pass its directory as `-CoreDirectory`. Stock ocgcore does not provide the extra-deck extension used here. The runner requires a winner and a final count of 53 cards (50 deck + 3 AP) for both seats. Individual traces are written to `artifacts/`. The sample's code and decks are English-facing, and run without card art.

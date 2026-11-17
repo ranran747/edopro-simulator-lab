@@ -1,5 +1,5 @@
 param(
-    [Parameter(Mandatory)][string]$ProjectIgnis,
+    [string]$ProjectIgnis = (Join-Path (Split-Path $PSScriptRoot -Parent) 'shared-scripts'),
     [string]$CoreDirectory = '',
     [ValidateRange(1,10000)][int]$Seeds = 20
 )
