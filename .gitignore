@@ -1,0 +1,12 @@
+/artifacts/
+/dist/
+/native/build/
+/runtime/
+/packs/
+/__pycache__/
+**/__pycache__/
+*.cdb
+*.dll
+*.exe
+*.zip
+.env*

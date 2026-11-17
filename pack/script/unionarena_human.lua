@@ -1,0 +1,1 @@
+-- The bundled sample is a headless AI-vs-AI fixture.
