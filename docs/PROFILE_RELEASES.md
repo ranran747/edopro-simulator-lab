@@ -24,14 +24,26 @@ python -m pip install Pillow
 python tools/build_profile_release.py unionarena --output dist/windows-local --local-project 'C:\edopro-unionarena'
 ```
 
-ZIP を新規フォルダに展開し、`Start.cmd` を開いてください。既存の専用クライアント、ルール、翻訳DBとデッキ選択用のシナリオを使います。タイトルと対戦画面に作品別の背景が入ります。手元の素材を同梱するには `--official-art` に `cover.png`、`title-logo.png`、`AppIcon.ico` などを置いたフォルダを指定します。ONE PIECE のドン!! 用裏面は `don-back.png` で指定できます。
+ZIP を新規フォルダに展開し、`Start.cmd` を開いてください。既存の専用クライアント、ルール、翻訳DBとデッキ選択用のシナリオを使います。タイトルと対戦画面に作品別の背景が入ります。裏面・ロゴ・アイコンはプロジェクトに設定された素材を使います。差し替える場合は `--official-art` に `cover.png`、`title-logo.png`、`AppIcon.ico` などを置いたフォルダを指定します。ONE PIECE のドン!! 用裏面は `don-back.png` で指定できます。
 
 `--local-project` を省くと GitHub 配布用のセットアップキットができます。
 
-## 素材を確認できる公式ページ
+## 素材の参照先
 
-- コナンの通常カードの裏面は、オフィシャルルールマニュアルの PDF 3 ページ目に掲載されています。[タカラトミー公式マニュアル](https://www.takaratomy.co.jp/products/conan-cardgame/pdf/rule/rule_manual.pdf#page=3)
 - サイバーパンクのタイトルロゴは、公式マーケティング素材のロゴ欄から取得できます。[Cyberpunk TCG Marketing Materials](https://cyberpunktcg.com/marketing-materials)
 - ポケポケのロゴとアプリアイコンは、公式サイトの素材です。[Pokémon TCG Pocket 公式サイト](https://www.pokemontcgpocket.com/ja/)
-- デュエマでは公式スリーブのカード裏面 ver. を使えます。[タカラトミー公式スリーブ](https://dm.takaratomy.co.jp/product/protect97/)
-- ユニオンアリーナではカードの裏側に公式スタンダードブラックのスリーブを使えます。[バンダイ公式スリーブ](https://www.unionarena-tcg.com/jp/products/other/sleeve/standard_black.php)
+
+ローカル版の通常カードの裏面は、次の公式資料または実物カード写真から取り出しています。画像は `theme --official-back` で適用できます。
+
+| タイトル | 裏面の参照画像 |
+| --- | --- |
+| 名探偵コナン TCG | [公式ルールマニュアル PDF 3 ページ目](https://www.takaratomy.co.jp/products/conan-cardgame/pdf/rule/rule_manual.pdf#page=3) |
+| Cyberpunk TCG | [WeirdCo 公式製造日誌](https://cyberpunktcg.com/blog/production-update-1) ・ [通常カードの実物写真](https://www.ebay.co.uk/itm/188883305990) |
+| ドラゴンボール フュージョンワールド | [FB07-104 の実物写真](https://www.ebay.com/itm/366245091408) |
+| デュエル・マスターズ | [ボルシャック・モモキングNEX の実物写真](https://ec.bigban.jp/item/1017003838393) |
+| ガンダムカードゲーム | [カードショップの実物写真](https://torecaplaza55.com/?pid=188984453) |
+| ONE PIECEカードゲーム | [通常カードの実物写真](https://www.ebay.com/itm/137008868314) ・ [ドン!! カードの実物写真](https://www.ebay.com/itm/176371725196) |
+| パルワールド OCG | [通常カードの実物写真](https://www.ebay.co.uk/itm/137568121235) |
+| ポケモンカードゲーム | [日本版 XY10-010 の実物写真](https://www.ebay.com/itm/147069522429) |
+| Pokémon TCG Pocket | [DeNA 公式紹介のゲットチャレンジ画面](https://dena.com/intl/news/4742/) |
+| ユニオンアリーナ | [UE01BT/BLC-1-086 の実物写真](https://www.ebay.com/itm/317920829639) |

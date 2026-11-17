@@ -180,9 +180,16 @@ def copy_runtime(project, target, profile, scene, official):
     (target / "WindBot/bots.json").write_text("[]\n", encoding="utf-8")
     publisher_files = {"official_back": "cover.png", "resource_back": "don-back.png",
                        "title_logo": "title-logo.png", "icon": "AppIcon.ico"}
-    local_art = {role: official / filename for role, filename in publisher_files.items()
-                 if official and (official / filename).is_file()}
-    theme(target, profile, title=scene, battle=scene, scene_sleeve=True, fill=True, **local_art)
+    artwork_dirs = (official, source / "textures/tcg", pack / "textures/tcg")
+    local_art = {}
+    for role, filename in publisher_files.items():
+        for folder in artwork_dirs:
+            if folder and (folder / filename).is_file():
+                local_art[role] = folder / filename
+                break
+    if "official_back" not in local_art:
+        raise ValueError("add the card back as cover.png in --official-art or the project's TCG textures")
+    theme(target, profile, title=scene, battle=scene, fill=True, **local_art)
 
 
 def build(profile, output, project, official=None):
