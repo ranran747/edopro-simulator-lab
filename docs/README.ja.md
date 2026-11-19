@@ -1,6 +1,6 @@
 # EDOPro Simulator Lab 日本語ガイド
 
-[English](../README.md) · [開発を支援する](https://github.com/sponsors/ranran747)
+[English](../README.md) · [noteの記事末尾のチップで応援する](https://note.com/muutan_ai_lab/n/n615b21d388af) · [GitHub Sponsors](https://github.com/sponsors/ranran747)
 
 EDOPro を使ったカードシミュレーターの開発・検証用リポジトリです。最初の公開版にはエンジンのソース、AI 自動対戦の検証ツール、自作の見本デッキ2組、カードパック分離と画像追加のツールがあります。
 

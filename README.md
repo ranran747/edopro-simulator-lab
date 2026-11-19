@@ -1,6 +1,6 @@
 # EDOPro Simulator Lab
 
-[日本語](docs/README.ja.md) · [Support development](https://github.com/sponsors/ranran747)
+[日本語](docs/README.ja.md) · [Tip on note (Japanese)](https://note.com/muutan_ai_lab/n/n615b21d388af) · [GitHub Sponsors](https://github.com/sponsors/ranran747)
 
 Build and test local card-game simulators on EDOPro. This developer preview contains an ocgcore source tree, an AI-vs-AI match runner, two original sample decks, and tools for assembling separately installed card packs and artwork. The existing game-specific clients use their matching card and rule packs.
 
@@ -35,4 +35,4 @@ The English README is the default. A Japanese guide is linked above. Text and la
 
 ## Licensing and support
 
-See [source and dependency notices](docs/SOURCE.md). The funding link supports maintenance of the public tooling, test fixtures and documentation. Access to source and sample decks is free.
+See [source and dependency notices](docs/SOURCE.md). Tips and sponsorship support maintenance of the public tooling, test fixtures and documentation.
