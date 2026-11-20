@@ -4,9 +4,9 @@
 
 | ゲーム / Game | Windows本体 | 導入ガイド | セットアップキット |
 |---|---|---|---|
-| デュエル・マスターズ | [本体ZIP・ソース](https://github.com/ranran747/edopro-simulator-lab/releases/tag/windows-2026.11.20-preview2) | [note](https://note.com/muutan_ai_lab/n/n237fee805fcc) | [補助キット](https://github.com/ranran747/edopro-simulator-lab/releases/tag/windows-2026.11.20-preview2) |
-| ONE PIECEカードゲーム | [本体ZIP・ソース](https://github.com/ranran747/edopro-simulator-lab/releases/tag/windows-2026.11.20-preview2) | [note](https://note.com/muutan_ai_lab/n/nc37f97b342d6) | [補助キット](https://github.com/ranran747/edopro-simulator-lab/releases/tag/onepiece-setup-v0.2.0) |
-| ドラゴンボール フュージョンワールド | [本体ZIP・ソース](https://github.com/ranran747/edopro-simulator-lab/releases/tag/windows-2026.11.20-preview2) | [note](https://note.com/muutan_ai_lab/n/ne50effed9b1d) | [補助キット](https://github.com/ranran747/edopro-simulator-lab/releases/tag/dragonball-setup-v0.2.0) |
+| デュエル・マスターズ | [Windows本体ZIP](https://github.com/ranran747/edopro-simulator-lab/releases/download/windows-2026.11.20-preview2/edopro-duelmasters-Windows-2026.11.20-preview2.zip) · [版/ソース](https://github.com/ranran747/edopro-simulator-lab/releases/tag/windows-2026.11.20-preview2) | [note](https://note.com/muutan_ai_lab/n/n237fee805fcc) | [補助キット](https://github.com/ranran747/edopro-simulator-lab/releases/tag/windows-2026.11.20-preview2) |
+| ONE PIECEカードゲーム | [Windows本体ZIP](https://github.com/ranran747/edopro-simulator-lab/releases/download/windows-2026.11.20-preview2/edopro-onepiece-Windows-2026.11.20-preview1.zip) · [版/ソース](https://github.com/ranran747/edopro-simulator-lab/releases/tag/windows-2026.11.20-preview2) | [note](https://note.com/muutan_ai_lab/n/nc37f97b342d6) | [補助キット](https://github.com/ranran747/edopro-simulator-lab/releases/tag/windows-2026.11.20-preview2) |
+| ドラゴンボール フュージョンワールド | [Windows本体ZIP](https://github.com/ranran747/edopro-simulator-lab/releases/download/windows-2026.11.20-preview2/edopro-dragonball-Windows-2026.11.20-preview1.zip) · [版/ソース](https://github.com/ranran747/edopro-simulator-lab/releases/tag/windows-2026.11.20-preview2) | [note](https://note.com/muutan_ai_lab/n/ne50effed9b1d) | [補助キット](https://github.com/ranran747/edopro-simulator-lab/releases/tag/windows-2026.11.20-preview2) |
 | ガンダムカードゲーム | 本体の公開準備中 | [note](https://note.com/muutan_ai_lab/n/nec00fcb4a8cb) | [補助キット](https://github.com/ranran747/edopro-simulator-lab/releases/tag/gundam-setup-v0.2.0) |
 | ポケモンカードゲーム（紙版） | 本体の公開準備中 | [note](https://note.com/muutan_ai_lab/n/ne93536e0e646) | [補助キット](https://github.com/ranran747/edopro-simulator-lab/releases/tag/pokemon-setup-v0.2.0) |
 | ポケポケ（Pokémon TCG Pocket） | 本体の公開準備中 | [note](https://note.com/muutan_ai_lab/n/n7fecfa93c92a) | [補助キット](https://github.com/ranran747/edopro-simulator-lab/releases/tag/pokepoke-setup-v0.2.0) |
@@ -17,7 +17,7 @@
 
 ## Windowsで始める
 
-1. ゲームの「本体ZIP・ソース」を開き、`*-Windows-*.zip`を取得します。
+1. ゲームの「Windows本体ZIP」を取得します。版の説明・対応ソースは併記のReleaseから確認できます。
 2. 新しいフォルダーにZIPを展開し、`Start.cmd`を実行します。
 3. 当該版の説明で対戦方法・同梱デッキ・カード画像の収録範囲を確認します。
 
