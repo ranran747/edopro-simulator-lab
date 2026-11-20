@@ -8,6 +8,8 @@ Unofficial Windows simulators for Duel Masters, ONE PIECE Card Game, Dragon Ball
 
 Start with the [game-specific download catalog](docs/DOWNLOADS.md). It links each Windows build, installation guide and setup kit. A **Windows build** contains the client, core and matching card/rule pack. A **setup kit** provides launch/artwork tools for an existing installation and cannot start a match by itself.
 
+[Watch the 33-second Windows introduction](https://www.youtube.com/watch?v=6zaFEprMObA) (Japanese narration, actual client screens).
+
 Extract a Windows build into a new directory and run `Start.cmd`. Read that release's notes for tested modes, included decks, card-art coverage and known limitations. AI matches are one of the simulator features; the available modes depend on the game and release.
 
 ## Installation, support and source
