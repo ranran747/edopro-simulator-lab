@@ -4,9 +4,9 @@
 
 | ゲーム / Game | Windows本体 | 導入ガイド | セットアップキット |
 |---|---|---|---|
-| デュエル・マスターズ | [本体ZIP・ソース](https://github.com/ranran747/edopro-simulator-lab/releases/tag/windows-2026.11.20-preview2) | [note](https://note.com/muutan_ai_lab/n/n237fee805fcc) | [補助キット](https://github.com/ranran747/edopro-simulator-lab/releases/tag/duelmasters-setup-v0.2.0) |
-| ONE PIECEカードゲーム | 本体の公開準備中 | [note](https://note.com/muutan_ai_lab/n/nc37f97b342d6) | [補助キット](https://github.com/ranran747/edopro-simulator-lab/releases/tag/onepiece-setup-v0.2.0) |
-| ドラゴンボール フュージョンワールド | 本体の公開準備中 | [note](https://note.com/muutan_ai_lab/n/ne50effed9b1d) | [補助キット](https://github.com/ranran747/edopro-simulator-lab/releases/tag/dragonball-setup-v0.2.0) |
+| デュエル・マスターズ | [本体ZIP・ソース](https://github.com/ranran747/edopro-simulator-lab/releases/tag/windows-2026.11.20-preview2) | [note](https://note.com/muutan_ai_lab/n/n237fee805fcc) | [補助キット](https://github.com/ranran747/edopro-simulator-lab/releases/tag/windows-2026.11.20-preview2) |
+| ONE PIECEカードゲーム | [本体ZIP・ソース](https://github.com/ranran747/edopro-simulator-lab/releases/tag/windows-2026.11.20-preview2) | [note](https://note.com/muutan_ai_lab/n/nc37f97b342d6) | [補助キット](https://github.com/ranran747/edopro-simulator-lab/releases/tag/onepiece-setup-v0.2.0) |
+| ドラゴンボール フュージョンワールド | [本体ZIP・ソース](https://github.com/ranran747/edopro-simulator-lab/releases/tag/windows-2026.11.20-preview2) | [note](https://note.com/muutan_ai_lab/n/ne50effed9b1d) | [補助キット](https://github.com/ranran747/edopro-simulator-lab/releases/tag/dragonball-setup-v0.2.0) |
 | ガンダムカードゲーム | 本体の公開準備中 | [note](https://note.com/muutan_ai_lab/n/nec00fcb4a8cb) | [補助キット](https://github.com/ranran747/edopro-simulator-lab/releases/tag/gundam-setup-v0.2.0) |
 | ポケモンカードゲーム（紙版） | 本体の公開準備中 | [note](https://note.com/muutan_ai_lab/n/ne93536e0e646) | [補助キット](https://github.com/ranran747/edopro-simulator-lab/releases/tag/pokemon-setup-v0.2.0) |
 | ポケポケ（Pokémon TCG Pocket） | 本体の公開準備中 | [note](https://note.com/muutan_ai_lab/n/n7fecfa93c92a) | [補助キット](https://github.com/ranran747/edopro-simulator-lab/releases/tag/pokepoke-setup-v0.2.0) |
