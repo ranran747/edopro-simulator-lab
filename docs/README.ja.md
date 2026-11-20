@@ -1,29 +1,27 @@
-# EDOPro Simulator Lab 日本語ガイド
+# Windows カードゲームシミュレーター 日本語ガイド
 
-[English](../README.md) · [noteの記事末尾のチップで応援する](https://note.com/muutan_ai_lab/n/n615b21d388af) · [GitHub Sponsors](https://github.com/sponsors/ranran747)
+[配布一覧・FAQ](DOWNLOADS.md) · [English](../README.md) · [noteチップ](https://note.com/muutan_ai_lab/n/n615b21d388af) · [GitHub Sponsors](https://github.com/sponsors/ranran747)
 
-EDOPro を使ったカードシミュレーターの開発・検証用リポジトリです。最初の公開版にはエンジンのソース、AI 自動対戦の検証ツール、自作の見本デッキ2組、カードパック分離と画像追加のツールがあります。
+各ゲーム向けの非公式Windowsシミュレーターです。**まず[ゲーム別の配布一覧](DOWNLOADS.md)で、使いたい作品のWindows本体と導入ガイドを選んでください。** シミュレーター紹介が主で、AI対AIは利用できる版での対戦/観戦機能の一つです。
 
-## 自作カードの対戦を実行する
+## 導入手順
 
-[Windows コマンドライン版](https://github.com/ranran747/edopro-simulator-lab/releases/latest)を展開し、PowerShell で `Run-demo.cmd` を実行します。ソースからビルドする場合は Visual Studio 2022 C++ Build Tools、Windows SDK、CMake を用意します。
+1. 配布一覧から対象ゲームの本体Releaseを開きます。
+2. `*-Windows-*.zip`を新しいフォルダーへ展開します。
+3. `Start.cmd`を実行し、当該版の説明に沿って対戦します。
 
-```powershell
-.\tools\run-demo.ps1 -Seeds 20
-```
+本体Releaseは専用exe・コア・カードDB・Luaを収録します。「セットアップキット」は、専用クライアントとデータを持っている人向けの起動/画像追加用ツールです。必要ファイルが不足したまま遊べるとは案内しません。
 
-改造済みの32ビット `ocgcore.dll` がある場合は `-CoreDirectory` で DLL のあるフォルダを渡せます。決着と両席それぞれのカード53枚（デッキ50枚＋AP3枚）を検査します。ログは `artifacts/` に出ます。
+## 対応範囲と不具合
 
-## カードパックと画像
+収録カード、カード画像、デッキ、対戦方法と検証した組合せは版ごとに異なります。公開スモークテストは、その範囲で起動・対戦が完走したという結果です。各カード効果の完全性を一括で保証するものではありません。
 
-[タイトル別の GitHub Releases](PROFILE_RELEASES.md) から、Windows の起動ファイルと画像セットアップキットを取得できます。
+問題が出たときは[Issues](https://github.com/ranran747/edopro-simulator-lab/issues)へ、作品名、ダウンロードしたファイル名、Windows版、カード番号、再現手順を記載してください。
 
-[各ゲームのパック手順](PACKS.md) に従い、カード名・効果文の入ったDBと Lua・対戦シナリオ・デッキを別々に用意します。ゲームに合う専用クライアントへ両方を展開して使います。
+## 開発を支援する
 
-画像は提供者の利用条件を確認したものを、数値IDの JPG・PNG として追加できます。 [Codex に渡すプロンプト](IMPORT_IMAGES_WITH_CODEX.md)
+公開版は無料です。[note記事末尾のチップ](https://note.com/muutan_ai_lab/n/n615b21d388af)と[GitHub Sponsors](https://github.com/sponsors/ranran747)で開発・検証・保守を任意に支援できます。
 
-```powershell
-python tools/import_images.py --runtime runtime/ProjectIgnis --local C:\path\to\your\art
-```
+## 開発者向け
 
-この案内は英語が標準で日本語も用意しています。各ゲームの対戦画面やカード文の言語は、専用クライアントとカードパックの対応状況によります。
+[パックの構成](PACKS.md)と[ソース/ライセンス](SOURCE.md)を参照してください。各本体Releaseには対応ソースZIPとビルド手順を用意します。自作カードの20戦を実行する[別のコマンドライン検証版](https://github.com/ranran747/edopro-simulator-lab/releases/tag/v0.1.1)もあります。
