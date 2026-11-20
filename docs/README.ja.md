@@ -2,13 +2,13 @@
 
 [配布一覧・FAQ](DOWNLOADS.md) · [English](../README.md) · [noteチップ](https://note.com/muutan_ai_lab/n/n615b21d388af) · [GitHub Sponsors](https://github.com/sponsors/ranran747)
 
-各ゲーム向けの非公式Windowsシミュレーターです。**まず[ゲーム別の配布一覧](DOWNLOADS.md)で、使いたい作品のWindows本体と導入ガイドを選んでください。** シミュレーター紹介が主で、AI対AIは利用できる版での対戦/観戦機能の一つです。
+各ゲーム向けの非公式Windowsシミュレーターです。**まず[ゲーム別の配布一覧](DOWNLOADS.md)で、使いたい作品のWindows本体と導入ガイドを選んでください。** 対戦/デッキ編集/観戦の対応範囲は各版の説明に記載しています。
 
 ## 導入手順
 
 1. 配布一覧から対象ゲームの本体Releaseを開きます。
 2. `*-Windows-*.zip`を新しいフォルダーへ展開します。
-3. `Start.cmd`を実行し、当該版の説明に沿って対戦します。
+3. `Start.cmd`を実行し、`Play`／「対戦する」から当該版の説明に沿って対戦します。
 
 本体Releaseは専用exe・コア・カードDB・Luaを収録します。「セットアップキット」は、専用クライアントとデータを持っている人向けの起動/画像追加用ツールです。必要ファイルが不足したまま遊べるとは案内しません。
 
