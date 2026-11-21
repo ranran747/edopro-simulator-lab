@@ -26,7 +26,7 @@ def allowed_image_role(path):
     if p in {'textures/tcg/title.jpg','textures/tcg/battle.jpg','textures/bg.png','textures/bg_deck.png','textures/bg_menu.png'}:
         return 'background'
     if p in {'textures/field.png','textures/field2.png','textures/field3.png','textures/field4.png',
-             'textures/fieldsp.png','textures/fieldsp2.png',
+             'textures/fieldsp.png','textures/fieldsp2.png','textures/fieldsp3.png','textures/fieldsp4.png',
              'textures/field-transparent.png','textures/field-transparent2.png',
              'textures/field-transparent3.png','textures/field-transparent4.png',
              'textures/field-transparentsp.png','textures/field-transparentsp2.png',
