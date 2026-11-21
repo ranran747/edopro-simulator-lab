@@ -10,3 +10,24 @@
 *.exe
 *.zip
 .env*
+
+# Images are local-only. GitHub contains code and collection instructions.
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.bmp
+*.dds
+*.svg
+*.ico
+*.icns
+*.tga
+*.tif
+*.tiff
+*.avif
+*.jxl
+*.ktx
+*.ktx2
+*.psd
+*.kra

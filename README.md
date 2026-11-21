@@ -1,5 +1,7 @@
 # Windows Card Game Simulators — EDOPro Simulator Lab
 
+**2026-11-21:** Image-containing downloads have been withdrawn. Image-free builds and local-only Codex image collection instructions are being prepared. This repository does not distribute card artwork, backgrounds, logos or icons.
+
 [日本語](docs/README.ja.md) · [Download catalog / 配布一覧](docs/DOWNLOADS.md) · [note tip](https://note.com/muutan_ai_lab/n/n615b21d388af) · [GitHub Sponsors](https://github.com/sponsors/ranran747)
 
 Unofficial Windows simulators for Duel Masters, ONE PIECE Card Game, Dragon Ball Fusion World, Gundam Card Game, Pokémon TCG, Pokémon TCG Pocket, UNION ARENA, Detective Conan TCG, Palworld OCG and Cyberpunk TCG.
