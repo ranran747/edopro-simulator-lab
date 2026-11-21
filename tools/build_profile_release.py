@@ -1,6 +1,7 @@
 """Build profile setup kits and, optionally, a Windows ZIP for local use."""
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import shutil
@@ -8,14 +9,33 @@ import sqlite3
 from tempfile import TemporaryDirectory
 
 from export_local_pack import PROFILES, pack_files, write_zip
-from profile_assets import TOOLS, card_rows, profile_for, theme
+from profile_assets import TOOLS, card_rows, profile_for
+from check_no_images import IMAGE_EXTENSIONS
 
 RUNTIME = "runtime/ProjectIgnis"
 BASE_SCRIPTS = {"archetype_setcode_constants.lua", "card_counter_constants.lua",
                 "cards_specific_functions.lua", "constant.lua", "debug_utility.lua",
                 "deprecated_functions.lua", "utility.lua", "COPYING.txt"}
 REPLACED_TEXTURES = {"cover", "cover2", "unknown"}
-DEFAULT_SKIN = "Purple - Obsessed"
+DEFAULT_SKIN = "none"
+
+def allowed_image_role(path):
+    p = Path(path).as_posix().lower()
+    if p.startswith('artwork/') and Path(p).stem in PROFILES and Path(p).suffix == '.jpg':
+        return 'background'
+    if p in {'textures/tcg/title.jpg','textures/tcg/battle.jpg','textures/bg.png','textures/bg_deck.png','textures/bg_menu.png'}:
+        return 'background'
+    if p in {'textures/field.png','textures/field2.png','textures/field3.png','textures/field4.png',
+             'textures/fieldsp.png','textures/fieldsp2.png',
+             'textures/field-transparent.png','textures/field-transparent2.png',
+             'textures/field-transparent3.png','textures/field-transparent4.png',
+             'textures/field-transparentsp.png','textures/field-transparentsp2.png',
+             'textures/field-transparentsp3.png','textures/field-transparentsp4.png'}:
+        return 'background'
+    if p in {'textures/cover.png','textures/cover2.png','textures/cover.jpg','textures/cover2.jpg',
+             'textures/tcg/cover.png','textures/tcg/cover2.png','textures/tcg/don-back.png'}:
+        return 'sleeve'
+    return None
 
 START = r"""@echo off
 setlocal
@@ -73,16 +93,17 @@ python tools/import_images.py --runtime runtime/ProjectIgnis --manifest images.t
 
 ## 裏面と背景
 
+背景とカード裏面（スリーブ）は同梱し、カード表面画像は含みません。`CODEX_COLLECT_IMAGES.md`で表面画像をPC内だけに取得します。表面画像をGitHubへコミット/アップロードしないでください。
+
 ゲームを終了し、利用可能な公式裏面を用意してから適用します。同じ裏面を通常表示・サイズ変更後の表示の両方に使います。
 
 ```powershell
-python tools/profile_assets.py theme --backgrounds
+python tools/profile_assets.py theme --title 'C:\\card-art\\title.jpg' --battle 'C:\\card-art\\battle.jpg'
 python tools/profile_assets.py theme --official-back 'C:\\card-art\\back.png'
 python tools/profile_assets.py theme --title-logo 'C:\\card-art\\logo.png' --icon 'C:\\card-art\\icon.ico'
 ```
 
-`--backgrounds` は作品の場所をイメージした図案をタイトル画面と対戦背景に設定します。
-公式裏面を手元に用意できないときは `--backgrounds --scene-sleeve` で場所の図案を使ったファン用スリーブを設定できます。
+同梱背景/裏面は保持し、差し替えたい場合だけ手元の画像を指定します。
 `--title` と `--battle` で手元の横長素材を指定できます。ONE PIECE のリソース用裏面は `--resource-back` で個別に指定できます。
 
 [Simulator Lab のソースとライセンス](https://github.com/ranran747/edopro-simulator-lab/blob/main/docs/SOURCE.md)
@@ -95,9 +116,13 @@ def write_kit(root, profile, local=False):
     puzzle = f"{profile['client']}_Player_Match"
     database = PROFILES[name]
     (root / "tools").mkdir()
-    (root / "artwork").mkdir()
-    source_scene = TOOLS.parent / "artwork" / f"{name}.jpg"
-    shutil.copy2(source_scene, root / "artwork" / source_scene.name)
+    (root / 'artwork').mkdir()
+    scene = TOOLS.parent / 'artwork' / f'{name}.jpg'
+    approved = json.loads((TOOLS.parent / 'artwork/ALLOWED_IMAGES.json').read_text(encoding='utf-8'))['allowed']
+    expected = next(row['sha256'] for row in approved if row['scope']=='git' and row['path']==f'artwork/{name}.jpg')
+    if hashlib.sha256(scene.read_bytes()).hexdigest() != expected:
+        raise ValueError('background does not match approved image manifest')
+    shutil.copy2(scene, root/'artwork'/scene.name)
     for filename in ("import_images.py", "profile_assets.py", "export_local_pack.py"):
         shutil.copy2(TOOLS / filename, root / "tools" / filename)
     shutil.copy2(TOOLS.parent / "COPYING", root / "COPYING")
@@ -116,9 +141,21 @@ def write_kit(root, profile, local=False):
 > カード番号を照合できた行について、別の `images.tsv` にヘッダーなしで `ID<TAB>直接のHTTPS画像URL` を書いてください。
 > 使用するホストを `--allow-host` で明示して `tools/import_images.py` を実行してください。ローカル提供の画像は数値IDに改名して `--local` で取り込んでください。
 > 見つからないID、版や面が特定できないID、リクエストが拒否されたIDは報告してください。利用可能な公式裏面がある場合は別ファイルとして用意し、`tools/profile_assets.py theme --official-back` で適用してください。
-> 対戦背景には `theme --backgrounds` で同梱の図案を設定できます。素材はローカルで管理してください。
+> 同梱の背景と裏面は保持します。カード表面画像は手元や公開資料からPC内だけに取得し、git add/push/Release uploadしないでください。
 {reference}"""
-    (root / "COLLECT.md").write_text(prompt, encoding="utf-8")
+    supplied = TOOLS.parent / 'profiles' / name / 'CODEX_COLLECT_IMAGES.md'
+    if supplied.is_file():
+        prompt = supplied.read_text(encoding='utf-8')
+        profile_dir = root / 'profiles' / name
+        profile_dir.mkdir(parents=True)
+        shutil.copy2(supplied, profile_dir / supplied.name)
+    common = TOOLS.parent / 'docs' / 'CODEX_IMAGE_COLLECTION.md'
+    if common.is_file():
+        (root / 'docs').mkdir(exist_ok=True)
+        shutil.copy2(common, root / 'docs' / common.name)
+    root_prompt = prompt.replace('../../docs/CODEX_IMAGE_COLLECTION.md', 'docs/CODEX_IMAGE_COLLECTION.md')
+    (root / "COLLECT.md").write_text(root_prompt, encoding="utf-8")
+    (root / "CODEX_COLLECT_IMAGES.md").write_text(root_prompt, encoding="utf-8")
 
 
 def copy_runtime(project, target, profile, scene, official):
@@ -135,6 +172,8 @@ def copy_runtime(project, target, profile, scene, official):
         raise ValueError("matching card database is empty")
 
     def copy(path):
+        if Path(path).suffix.lower() in IMAGE_EXTENSIONS and not allowed_image_role(path):
+            return
         destination = target / path
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source / path, destination)
@@ -147,11 +186,11 @@ def copy_runtime(project, target, profile, scene, official):
         "textfont = fonts/NotoSansJP-Regular.otf 12\nnumfont = fonts/NotoSansJP-Regular.otf\n"
         "fallbackFonts = \"bundled 12\"\nlanguage = English\n"
         f"automonsterpos = 1\nautospellpos = 1\nskin = {DEFAULT_SKIN}\n", encoding="utf-8")
-    for _, path in pack_files(source, ("fonts", "notices", f"skin/{DEFAULT_SKIN}"),
+    for _, path in pack_files(source, ("fonts", "notices"),
                               {".otf", ".ttf", ".txt", ".xml", ".png", ".gif"}):
         copy(path)
     for path in (source / "textures").iterdir():
-        if path.is_file() and path.stem not in REPLACED_TEXTURES:
+        if path.is_file():
             copy(path.relative_to(source))
     for directory in (source / "config/languages").iterdir():
         for filename in ("strings.conf", f"{name}-strings.conf", database):
@@ -178,18 +217,9 @@ def copy_runtime(project, target, profile, scene, official):
         (target / path).mkdir(exist_ok=True)
     (target / "WindBot").mkdir()
     (target / "WindBot/bots.json").write_text("[]\n", encoding="utf-8")
-    publisher_files = {"official_back": "cover.png", "resource_back": "don-back.png",
-                       "title_logo": "title-logo.png", "icon": "AppIcon.ico"}
-    artwork_dirs = (official, source / "textures/tcg", pack / "textures/tcg")
-    local_art = {}
-    for role, filename in publisher_files.items():
-        for folder in artwork_dirs:
-            if folder and (folder / filename).is_file():
-                local_art[role] = folder / filename
-                break
-    if "official_back" not in local_art:
-        raise ValueError("add the card back as cover.png in --official-art or the project's TCG textures")
-    theme(target, profile, title=scene, battle=scene, fill=True, **local_art)
+    for path in (source/'textures/tcg').glob('*'):
+        if path.is_file() and allowed_image_role(path.relative_to(source)):
+            copy(path.relative_to(source))
 
 
 def build(profile, output, project, official=None):
@@ -202,11 +232,24 @@ def build(profile, output, project, official=None):
         root.mkdir()
         write_kit(root, profile, local)
         if local:
-            copy_runtime(project, root / RUNTIME, profile, root / "artwork" / f"{profile['id']}.jpg", official)
+            copy_runtime(project, root / RUNTIME, profile, None, None)
         contents = ((path, path.relative_to(root.parent).as_posix())
                     for path in sorted(root.rglob("*"))
-                    if path.is_file() or (local and path.is_dir() and not any(path.iterdir())))
+                    if (path.is_file() and (path.suffix.lower() not in IMAGE_EXTENSIONS
+                        or allowed_image_role(path.relative_to(root).as_posix().replace(RUNTIME+'/', ''))))
+                    or (local and path.is_dir() and not any(path.iterdir())))
         target = output / f"{filename}.zip"
+        contents=list(contents)
+        allowed=[]
+        for path,name in contents:
+            if path.is_file() and path.suffix.lower() in IMAGE_EXTENSIONS:
+                relative=path.relative_to(root).as_posix().replace(RUNTIME+'/', '')
+                role=allowed_image_role(relative)
+                if not role:raise ValueError('unapproved image in release')
+                allowed.append({'scope':'zip','path':name,'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'role':role})
+        allowfile=root/'ALLOWED_BACKGROUND_AND_SLEEVE_IMAGES.json'
+        allowfile.write_text(json.dumps({'version':1,'allowed':allowed},indent=2)+'\n',encoding='utf-8')
+        contents.append((allowfile,allowfile.relative_to(root.parent).as_posix()))
         write_zip(target, contents)
     print(target)
     return target
@@ -219,6 +262,8 @@ def main():
     parser.add_argument("--local-project", type=Path, help="build a local-only ZIP from this installed simulator")
     parser.add_argument("--official-art", type=Path, help="folder of publisher artwork to use in a local ZIP")
     args = parser.parse_args()
+    if args.official_art:
+        parser.error('Images are local-only: import artwork after extraction with profile_assets.py theme.')
     if args.official_art and (not args.local_project or not args.official_art.is_dir()):
         parser.error("--official-art requires a local project and an existing artwork directory")
     try:

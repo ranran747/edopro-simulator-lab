@@ -1,37 +1,31 @@
-# Windows タイトル別セットアップキット
+# Windows 配布と画像の扱い
 
-各キットには作品別のタイトル・対戦背景、起動ファイル、画像インポーターと収集用プロンプトが入っています。実行には対応する専用クライアント、コア、カードパックを用意してください。[背景の生成プロンプト](../artwork/PROMPTS.md)
+現在のWindows本体は[ゲーム別配布一覧](DOWNLOADS.md)から取得してください。旧セットアップキット v0.2 のアーカイブは撤去済みです。本体にはクライアント・コア・DB・ルール・背景・カード裏面（スリーブ）を含み、カード表面・単独ロゴ・アイコン画像は含みません。
 
-| タイトル | GitHub Release |
-| --- | --- |
-| 名探偵コナン TCG | [conan](https://github.com/ranran747/edopro-simulator-lab/releases/tag/conan-setup-v0.2.0) |
-| Cyberpunk TCG | [cyberpunk](https://github.com/ranran747/edopro-simulator-lab/releases/tag/cyberpunk-setup-v0.2.0) |
-| ドラゴンボール フュージョンワールド | [dragonball](https://github.com/ranran747/edopro-simulator-lab/releases/tag/dragonball-setup-v0.2.0) |
-| デュエル・マスターズ | [duelmasters](https://github.com/ranran747/edopro-simulator-lab/releases/tag/duelmasters-setup-v0.2.0) |
-| ガンダムカードゲーム | [gundam](https://github.com/ranran747/edopro-simulator-lab/releases/tag/gundam-setup-v0.2.0) |
-| ONE PIECEカードゲーム | [onepiece](https://github.com/ranran747/edopro-simulator-lab/releases/tag/onepiece-setup-v0.2.0) |
-| パルワールド OCG | [palworld](https://github.com/ranran747/edopro-simulator-lab/releases/tag/palworld-setup-v0.2.0) |
-| ポケモンカードゲーム | [pokemon](https://github.com/ranran747/edopro-simulator-lab/releases/tag/pokemon-setup-v0.2.0) |
-| Pokémon TCG Pocket | [pokepoke](https://github.com/ranran747/edopro-simulator-lab/releases/tag/pokepoke-setup-v0.2.0) |
-| ユニオンアリーナ | [unionarena](https://github.com/ranran747/edopro-simulator-lab/releases/tag/unionarena-setup-v0.2.0) |
+## カード表面を追加する
 
-## 手元のプロジェクトから Windows ZIP を作る
+[Codex向け共通収集プロンプト](CODEX_IMAGE_COLLECTION.md)と、`profiles/<slug>/CODEX_COLLECT_IMAGES.md`を使います。画像は利用者のPC内へ追加します。同梱背景とスリーブは保持し、カード表面をGitHubやReleaseへアップロードしません。
 
-照合済みのデータ・スクリプトをインストール済みのプロジェクトを用意します。Python 3.10 以降と Pillow を使います。
+## 手元のプロジェクトからZIPを作る
 
 ```powershell
-python -m pip install Pillow
 python tools/build_profile_release.py unionarena --output dist/windows-local --local-project 'C:\edopro-unionarena'
 ```
 
-ZIP を新規フォルダに展開し、`Start.cmd` を開いてください。既存の専用クライアント、ルール、翻訳DBとデッキ選択用のシナリオを使います。タイトルと対戦画面に作品別の背景が入ります。裏面・ロゴ・アイコンはプロジェクトに設定された素材を使います。差し替える場合は `--official-art` に `cover.png`、`title-logo.png`、`AppIcon.ico` などを置いたフォルダを指定します。ONE PIECE のドン!! 用裏面は `don-back.png` で指定できます。
+この補助ツールは対応する専用クライアント、コア、カードパックを導入済みのプロジェクトからファイルを集めます。起動に必要な画像が欠けても動作する新版クライアントを使用してください。カード表面・ロゴ・アイコンは除外し、背景とスリーブだけを同梱します。既定skinは組込の`none`です。生成ZIP内の`ALLOWED_BACKGROUND_AND_SLEEVE_IMAGES.json`に許可画像の完全パスとSHA-256を記録します。
 
-`--local-project` を省くと GitHub 配布用のセットアップキットができます。
+`--local-project`を省くと、背景1枚・起動補助・画像インポーター・Codexプロンプトだけのキットになります。キット単体では対戦できません。`--official-art`で公開用カード表面やロゴを追加する機能は無効です。
 
-## 素材の参照先
+## 公開前の画像検査
 
-- サイバーパンクのタイトルロゴは、公式マーケティング素材のロゴ欄から取得できます。[Cyberpunk TCG Marketing Materials](https://cyberpunktcg.com/marketing-materials)
-- ポケポケのロゴとアプリアイコンは、公式サイトの素材です。[Pokémon TCG Pocket 公式サイト](https://www.pokemontcgpocket.com/ja/)
+```powershell
+python tools/check_no_images.py --repo . --allowlist artwork/ALLOWED_IMAGES.json
+python tools/check_no_images.py --zip '<配布ZIP>' --allowlist '<外部allowed-images.json>'
+```
+
+許可画像は背景またはスリーブの完全パス・SHA-256一致に限ります。`pics/`内や数値ファイル名の画像は許可できません。この検査は画像拡張子とZIP内容を検査し、exe等に埋め込まれた画像の検査は行いません。
+
+## スリーブの出典
 
 ローカル版の通常カードの裏面は、次の公式資料または実物カード写真から取り出しています。画像は `theme --official-back` で適用できます。
 

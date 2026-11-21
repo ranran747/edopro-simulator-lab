@@ -5,3 +5,9 @@
 - In this repository the shared simulator tools, original sample content and Lua rule engine are provided under AGPL-3.0-or-later. Existing upstream notices govern upstream files.
 - The runner bundles three unmodified shared [Project Ignis CardScripts](https://github.com/ProjectIgnis/CardScripts) files from the EDOPro 41.0.2-based runtime used during development. See [CardScripts license](../shared-scripts/COPYING.txt). The runner also accepts matching local shared scripts via `-ProjectIgnis`.
 - EDOPro and the game names are used to describe compatibility. This project is independently maintained.
+
+## Windows previews and local artwork
+
+Each current Windows preview has a matching source ZIP in the [same release](https://github.com/ranran747/edopro-simulator-lab/releases/tag/windows-2026.11.21-preview3-local-card-art). The source includes the modified client and engine with dependency notices and build instructions. Missing UI textures use neutral in-memory fallbacks; no card artwork is embedded in those fallbacks.
+
+Backgrounds and card backs/sleeves are the only bundled image files. The binary archive includes an exact-path/SHA-256 image allowlist. Card-face images are collected locally using the [Codex prompts](CODEX_IMAGE_COLLECTION.md), and are not part of the public source or binary archives.
