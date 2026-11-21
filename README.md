@@ -1,39 +1,23 @@
 # Windows Card Game Simulators — EDOPro Simulator Lab
 
-**2026-11-21:** Card-face image bundles have been withdrawn. Replacement builds retain backgrounds and card sleeves only; Codex collection prompts obtain card-face artwork on your PC. Card faces are not distributed by this repository.
+[日本語](docs/README.ja.md) · [Download catalog](docs/DOWNLOADS.md) · [Collect card faces with Codex](docs/CODEX_IMAGE_COLLECTION.md) · [note tip](https://note.com/muutan_ai_lab/n/n615b21d388af) · [GitHub Sponsors](https://github.com/sponsors/ranran747)
 
-[日本語](docs/README.ja.md) · [Download catalog / 配布一覧](docs/DOWNLOADS.md) · [note tip](https://note.com/muutan_ai_lab/n/n615b21d388af) · [GitHub Sponsors](https://github.com/sponsors/ranran747)
+Unofficial Windows simulators for ten card games. Choose a game in the [download catalog](docs/DOWNLOADS.md). The client, core, matching card/rule pack, launcher, backgrounds and card sleeves are included. **Card-face images are not distributed.** Add them locally with the common Codex collection prompt or the game-specific prompt linked in the catalog.
 
-Unofficial Windows simulators for Duel Masters, ONE PIECE Card Game, Dragon Ball Fusion World, Gundam Card Game, Pokémon TCG, Pokémon TCG Pocket, UNION ARENA, Detective Conan TCG, Palworld OCG and Cyberpunk TCG.
+Extract the Windows build into a new directory and run `Start.cmd`. Card faces may show `NO IMAGE` until local artwork is added. Read the matching release notes for tested modes, decks and known limitations. [The 33-second introduction](https://www.youtube.com/watch?v=6zaFEprMObA) shows a local installation after card-face artwork was added.
 
-## Download and play
+## Installation, reports and source
 
-Start with the [game-specific download catalog](docs/DOWNLOADS.md). It links each Windows build, installation guide and setup kit. A **Windows build** contains the client, core and matching card/rule pack. A **setup kit** provides launch/artwork tools for an existing installation and cannot start a match by itself.
-
-[Watch the 33-second Windows introduction](https://www.youtube.com/watch?v=6zaFEprMObA) (Japanese narration, actual client screens).
-
-Extract a Windows build into a new directory and run `Start.cmd`. Read that release's notes for tested modes, included decks, card-art coverage and known limitations. AI matches are one of the simulator features; the available modes depend on the game and release.
-
-## Installation, support and source
-
-- [Downloads and FAQ](docs/DOWNLOADS.md): Windows downloads, game names, installation, reports and source links.
-- [Japanese guide](docs/README.ja.md): Windows setup and the difference between full builds and helper kits.
-- [Pack documentation](docs/PACKS.md): database and Lua overlays for existing installations.
-- [Issues](https://github.com/ranran747/edopro-simulator-lab/issues): include game, release, card ID and reproduction steps.
-- [Source/dependency notices](docs/SOURCE.md): upstream licenses. Matching source archives are provided beside binary releases.
+- [Downloads and FAQ](docs/DOWNLOADS.md)
+- [Japanese guide](docs/README.ja.md)
+- [Pack documentation](docs/PACKS.md)
+- [Issues](https://github.com/ranran747/edopro-simulator-lab/issues): game, release, card ID and reproduction steps.
+- [Source/dependency notices](docs/SOURCE.md): retain upstream licenses and use the matching source archive beside each binary.
 
 ## Support development
 
-The public previews are free. [Tip through the note article](https://note.com/muutan_ai_lab/n/n615b21d388af) or use [GitHub Sponsors](https://github.com/sponsors/ranran747) to support development, testing and maintenance. The amount is optional; game names describe compatibility with this independently maintained project.
+The previews are free. [Note tips](https://note.com/muutan_ai_lab/n/n615b21d388af) and [GitHub Sponsors](https://github.com/sponsors/ranran747) support development, testing and maintenance voluntarily.
 
 ## Developer sample
 
-The separate [command-line demo](https://github.com/ranran747/edopro-simulator-lab/releases/tag/v0.1.1) runs 20 fixed-seed AI matches using two original decks and writes traces to `artifacts/`. It is distinct from the game-specific Windows clients.
-
-To build that sample from source, install Visual Studio 2022 C++ Build Tools, Windows SDK and CMake, then run:
-
-```powershell
-.\tools\run-demo.ps1 -Seeds 20
-```
-
-The shared core includes modified upstream ocgcore and Lua. See [source and dependency notices](docs/SOURCE.md).
+The separate [command-line demo](https://github.com/ranran747/edopro-simulator-lab/releases/tag/v0.1.1) runs 20 fixed-seed AI matches with two original decks. It is distinct from game-specific Windows clients. The native core includes modified upstream ocgcore and Lua; see the source/dependency notices.

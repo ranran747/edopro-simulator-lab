@@ -1,29 +1,13 @@
 # Windows カードゲームシミュレーター 日本語ガイド
 
-[配布一覧・FAQ](DOWNLOADS.md) · [English](../README.md) · [noteチップ](https://note.com/muutan_ai_lab/n/n615b21d388af) · [GitHub Sponsors](https://github.com/sponsors/ranran747)
+[配布一覧・FAQ](DOWNLOADS.md) · [Codexカード画像収集](CODEX_IMAGE_COLLECTION.md) · [English](../README.md)
 
-各ゲーム向けの非公式Windowsシミュレーターです。**まず[ゲーム別の配布一覧](DOWNLOADS.md)で、使いたい作品のWindows本体と導入ガイドを選んでください。** 対戦/デッキ編集/観戦の対応範囲は各版の説明に記載しています。
+各ゲーム向けの非公式Windowsシミュレーターです。配布一覧から作品の本体と対応ソースを選び、新しいフォルダーへ展開して`Start.cmd`を実行します。
 
-## 導入手順
+本体には専用exe・コア・DB・Lua・起動ファイル・背景・スリーブを同梱しています。**カード表面画像は同梱していません。** カード表面は`NO IMAGE`などで表示され、必要なら作品別Codexプロンプトで画像をPC内へ収集・追加できます。背景やスリーブの再収集は不要です。
 
-[実画面による33秒の紹介動画](https://www.youtube.com/watch?v=6zaFEprMObA)で、本体の選び方と起動手順を確認できます。
+[紹介動画](https://www.youtube.com/watch?v=6zaFEprMObA)とスクリーンショットは、カード表面画像をローカル追加した状態です。過去の表示確認枚数は現在の配布への同梱枚数ではありません。
 
-1. 配布一覧から対象ゲームの本体Releaseを開きます。
-2. `*-Windows-*.zip`を新しいフォルダーへ展開します。
-3. `Start.cmd`を実行し、`Play`／「対戦する」から当該版の説明に沿って対戦します。
+対戦モード・見本デッキ・効果対応・検証範囲は各版の説明を確認してください。正常進行のスモーク検証はCPUの強さの証明とは別です。不具合は[Issues](https://github.com/ranran747/edopro-simulator-lab/issues)へ作品名・版・カード番号・再現手順を添えて報告できます。
 
-本体Releaseは専用exe・コア・カードDB・Luaを収録します。「セットアップキット」は、専用クライアントとデータを持っている人向けの起動/画像追加用ツールです。必要ファイルが不足したまま遊べるとは案内しません。
-
-## 対応範囲と不具合
-
-収録カード、カード画像、デッキ、対戦方法と検証した組合せは版ごとに異なります。公開スモークテストは、その範囲で起動・対戦が完走したという結果です。各カード効果の完全性を一括で保証するものではありません。
-
-問題が出たときは[Issues](https://github.com/ranran747/edopro-simulator-lab/issues)へ、作品名、ダウンロードしたファイル名、Windows版、カード番号、再現手順を記載してください。
-
-## 開発を支援する
-
-公開版は無料です。[note記事末尾のチップ](https://note.com/muutan_ai_lab/n/n615b21d388af)と[GitHub Sponsors](https://github.com/sponsors/ranran747)で開発・検証・保守を任意に支援できます。
-
-## 開発者向け
-
-[パックの構成](PACKS.md)と[ソース/ライセンス](SOURCE.md)を参照してください。各本体Releaseには対応ソースZIPとビルド手順を用意します。自作カードの20戦を実行する[別のコマンドライン検証版](https://github.com/ranran747/edopro-simulator-lab/releases/tag/v0.1.1)もあります。
+公開版は無料です。[note記事末尾のチップ](https://note.com/muutan_ai_lab/n/n615b21d388af)と[GitHub Sponsors](https://github.com/sponsors/ranran747)で開発・検証・保守を任意に支援できます。[パックの構成](PACKS.md)と[ソース/ライセンス](SOURCE.md)も参照してください。
