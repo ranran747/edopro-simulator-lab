@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "allowed": [
+    {
+      "scope": "git",
+      "path": "artwork/conan.jpg",
+      "sha256": "56f4fb59fab8e6f4aac4591cc652d4b4ea766a31ddf24966aa6fe3064b88a051",
+      "role": "background"
+    },
+    {
+      "scope": "git",
+      "path": "artwork/cyberpunk.jpg",
+      "sha256": "392b729330d6417bb9de96784360f63f159cfc604697ba7e89b8a077e1630a91",
+      "role": "background"
+    },
+    {
+      "scope": "git",
+      "path": "artwork/dragonball.jpg",
+      "sha256": "9862956b84a8a1d4b4aeb055fd00523993e15b29105a4598209df344f49f61dd",
+      "role": "background"
+    },
+    {
+      "scope": "git",
+      "path": "artwork/duelmasters.jpg",
+      "sha256": "29f07da687b2b1b935c4fbf30cce41ed39735724566bb0451597fec182379d52",
+      "role": "background"
+    },
+    {
+      "scope": "git",
+      "path": "artwork/gundam.jpg",
+      "sha256": "be63b4326a9c6f6e283c6f2ca3b51da3be9c9e324d5f6728e02ffc8f3254633a",
+      "role": "background"
+    },
+    {
+      "scope": "git",
+      "path": "artwork/onepiece.jpg",
+      "sha256": "7fd1562d10e5e7be1757ac3a8af8f66375f104b8da3827e3dbaea7ff02d457dc",
+      "role": "background"
+    },
+    {
+      "scope": "git",
+      "path": "artwork/palworld.jpg",
+      "sha256": "cdb3c0b8e869d8bee59af1f2173c02175f96034ccc04a992c16454994f38672a",
+      "role": "background"
+    },
+    {
+      "scope": "git",
+      "path": "artwork/pokemon.jpg",
+      "sha256": "52978bea3e537e80c66058092f3e7c63e8c121d9652b60f4ec55f2348bc9dbbf",
+      "role": "background"
+    },
+    {
+      "scope": "git",
+      "path": "artwork/pokepoke.jpg",
+      "sha256": "5dda7f59d80f6feb66eaca004ddad26df83af7b52bca79d6e2ca246c0e785669",
+      "role": "background"
+    },
+    {
+      "scope": "git",
+      "path": "artwork/unionarena.jpg",
+      "sha256": "985c687b2fbbb5d2af9c78e287a0ca53eba5a56b4d58cfbed12a40e3ae82a69f",
+      "role": "background"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Windows Card Game Simulators — EDOPro Simulator Lab
 
-**2026-11-21:** Image-containing downloads have been withdrawn. Image-free builds and local-only Codex image collection instructions are being prepared. This repository does not distribute card artwork, backgrounds, logos or icons.
+**2026-11-21:** Card-face image bundles have been withdrawn. Replacement builds retain backgrounds and card sleeves only; Codex collection prompts obtain card-face artwork on your PC. Card faces are not distributed by this repository.
 
 [日本語](docs/README.ja.md) · [Download catalog / 配布一覧](docs/DOWNLOADS.md) · [note tip](https://note.com/muutan_ai_lab/n/n615b21d388af) · [GitHub Sponsors](https://github.com/sponsors/ranran747)
 

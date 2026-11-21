@@ -31,3 +31,15 @@
 *.ktx2
 *.psd
 *.kra
+
+# User-approved backgrounds only; card faces stay local.
+!/artwork/conan.jpg
+!/artwork/cyberpunk.jpg
+!/artwork/dragonball.jpg
+!/artwork/duelmasters.jpg
+!/artwork/gundam.jpg
+!/artwork/onepiece.jpg
+!/artwork/palworld.jpg
+!/artwork/pokemon.jpg
+!/artwork/pokepoke.jpg
+!/artwork/unionarena.jpg
